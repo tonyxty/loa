@@ -28,21 +28,21 @@ export function calculatePossibleMoves(board: Board, row: number, column: number
   const subDiagSum = sum((s < 8 ? range(s + 1) : range(15 - s, s - 7)).map(i => pieces[i][s - i]));
   const moves = range(8).map(_ => new Array(8).fill(false));
   const unobstructed = (a: number []) => !a.some(x => x === -selected);
-  if (column >= rowSum && unobstructed(range(rowSum).map(j => board[row][column - j])) && board[row][column - rowSum] != selected)
+  if (column >= rowSum && unobstructed(range(rowSum).map(j => board[row][column - j])) && board[row][column - rowSum] !== selected)
     moves[row][column - rowSum] = true;
-  if (column + rowSum < 8 && unobstructed(range(rowSum).map(j => board[row][column + j])) && board[row][column + rowSum] != selected)
+  if (column + rowSum < 8 && unobstructed(range(rowSum).map(j => board[row][column + j])) && board[row][column + rowSum] !== selected)
     moves[row][column + rowSum] = true;
-  if (row >= colSum && unobstructed(range(colSum).map(i => board[row - i][column])) && board[row - colSum][column] != selected)
+  if (row >= colSum && unobstructed(range(colSum).map(i => board[row - i][column])) && board[row - colSum][column] !== selected)
     moves[row - colSum][column] = true;
-  if (row + colSum < 8 && unobstructed(range(colSum).map(i => board[row + i][column])) && board[row + colSum][column] != selected)
+  if (row + colSum < 8 && unobstructed(range(colSum).map(i => board[row + i][column])) && board[row + colSum][column] !== selected)
     moves[row + colSum][column] = true;
-  if (row >= diagSum && column >= diagSum && unobstructed(range(diagSum).map(i => board[row - i][column - i])) && board[row - diagSum][column - diagSum] != selected)
+  if (row >= diagSum && column >= diagSum && unobstructed(range(diagSum).map(i => board[row - i][column - i])) && board[row - diagSum][column - diagSum] !== selected)
     moves[row - diagSum][column - diagSum] = true;
-  if (row + diagSum < 8 && column + diagSum < 8 && unobstructed(range(diagSum).map(i => board[row + i][column + i])) && board[row + diagSum][column + diagSum] != selected)
+  if (row + diagSum < 8 && column + diagSum < 8 && unobstructed(range(diagSum).map(i => board[row + i][column + i])) && board[row + diagSum][column + diagSum] !== selected)
     moves[row + diagSum][column + diagSum] = true;
-  if (row >= subDiagSum && column + subDiagSum < 8 && unobstructed(range(subDiagSum).map(i => board[row - i][column + i])) && board[row - subDiagSum][column + subDiagSum] != selected)
+  if (row >= subDiagSum && column + subDiagSum < 8 && unobstructed(range(subDiagSum).map(i => board[row - i][column + i])) && board[row - subDiagSum][column + subDiagSum] !== selected)
     moves[row - subDiagSum][column + subDiagSum] = true;
-  if (row + subDiagSum < 8 && column >= subDiagSum && unobstructed(range(subDiagSum).map(i => board[row + i][column - i])) && board[row + subDiagSum][column - subDiagSum] != selected)
+  if (row + subDiagSum < 8 && column >= subDiagSum && unobstructed(range(subDiagSum).map(i => board[row + i][column - i])) && board[row + subDiagSum][column - subDiagSum] !== selected)
     moves[row + subDiagSum][column - subDiagSum] = true;
   return moves;
 }
@@ -69,8 +69,8 @@ function floodfill(grid: boolean [][]): boolean {
 }
 
 export function checkWinner(board: Piece [][]): Piece | null |  'draw' {
-  const white = floodfill(board.map(a => a.map(x => x == Piece.White)));
-  const black = floodfill(board.map(a => a.map(x => x == Piece.Black)));
+  const white = floodfill(board.map(a => a.map(x => x === Piece.White)));
+  const black = floodfill(board.map(a => a.map(x => x === Piece.Black)));
   if (white && black) return 'draw';
   else if (white) return Piece.White;
   else if (black) return Piece.Black;

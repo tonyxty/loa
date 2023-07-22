@@ -10,16 +10,16 @@ const Game = () => {
 
   const Cell = ({row, column}: {row: number, column: number}) => {
     let piece = '';
-    if (board[row][column] == Piece.White) {
+    if (board[row][column] === Piece.White) {
       piece = 'O';
-    } else if (board[row][column] == Piece.Black) {
+    } else if (board[row][column] === Piece.Black) {
       piece = 'X';
     }
     const movable = moves ? moves[row][column] : false;
     const classes = movable ? "cell highlight" : "cell";
     function handleClick() {
       if (winner) return;
-      if (board[row][column] == player) setSelected([row, column]);
+      if (board[row][column] === player) setSelected([row, column]);
       else if (selected && movable) {
         const nextBoard = board.map(a => a.slice());
         const [i, j] = selected;
@@ -45,12 +45,12 @@ const Game = () => {
   }
 
   const moves = selected ? calculatePossibleMoves(board, ...selected) : null;
-  const playerText = player == Piece.White ? 'O' : 'X';
+  const playerText = player === Piece.White ? 'O' : 'X';
   const winner = checkWinner(board);
   let textWin = '';
-  if (winner == Piece.White) textWin = 'O wins!';
-  else if (winner == Piece.Black) textWin = 'X wins!';
-  else if (winner == 'draw') textWin = 'draw';
+  if (winner === Piece.White) textWin = 'O wins!';
+  else if (winner === Piece.Black) textWin = 'X wins!';
+  else if (winner === 'draw') textWin = 'draw';
   return (
     <div>
       <div className="board">
